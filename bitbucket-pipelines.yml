@@ -1,0 +1,11 @@
+image: atlassian/default-image:2
+pipelines:
+  default:
+    - step:
+        services:
+          - docker
+        script: 
+          - export IMAGE_NAME=ivyowl/alpine-node-pupetteer
+          - yarn build:all
+          - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+          - docker push $IMAGE_NAME
