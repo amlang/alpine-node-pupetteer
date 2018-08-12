@@ -1,10 +1,10 @@
 {
   "name": "alpine-node-pupetteer",
-  "version": "1.0.0",
+  "version": "1.0.1-beta.1",
   "license": "MIT",
   "scripts": {
     "clean": "docker images | grep -E 'ivyowl/alpine-node-pupetteer' | awk '{print $3}' | xargs docker rmi",
-    "build:all": "yarn clean && packageversion=`cat package.json | grep version | head -1 | awk '{print $2}' | sed 's/[\",]//g'` && for nodeversion in 7 8 9 10; do sed -e 's/##NODE_VERSION##/'$nodeversion'/g' Dockerfile.template > Dockerfile && docker build -t ivyowl/alpine-node-pupetteer:$packageversion-$nodeversion -f Dockerfile .; done;",
+    "build:all": "packageversion=`cat package.json | grep version | head -1 | awk '{print $2}' | sed 's/[\",]//g'` && for nodeversion in 7 8 9 10; do sed -e 's/##NODE_VERSION##/'$nodeversion'/g' Dockerfile.template > Dockerfile && docker build -t ivyowl/alpine-node-pupetteer:$packageversion-$nodeversion -f Dockerfile .; done;",
     "build": "docker build -t ivyowl/alpine-node-pupetteer:latest -f Dockerfile .",
     "start:container": "docker run -it -v `pwd`:/app --name alnopu_1 --rm --cap-add=SYS_ADMIN ivyowl/alpine-node-pupetteer:10",
     "start": "yarn start:container -- bash",
