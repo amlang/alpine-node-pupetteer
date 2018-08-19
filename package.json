@@ -1,10 +1,11 @@
 {
   "name": "alpine-node-pupetteer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "scripts": {
     "clean": "docker images | grep -E 'ivyowl/alpine-node-pupetteer' | awk '{print $3}' | xargs docker rmi",
-    "build:all": "packageversion=`cat package.json | grep version | head -1 | awk '{print $2}' | sed 's/[\",]//g'` && for nodeversion in 7 8 9 10; do sed -e 's/##NODE_VERSION##/'$nodeversion'/g' Dockerfile.template > Dockerfile && docker build -t ivyowl/alpine-node-pupetteer:$packageversion-$nodeversion -f Dockerfile .; done;",
+    "create:all": "packageversion=`cat package.json | grep version | head -1 | awk '{print $2}' | sed 's/[\",]//g'` && for nodeversion in 6 7 8 9 10; do sed -e 's/##NODE_VERSION##/'$nodeversion'/g' Dockerfile.template > Docker/Dockerfile-$nodeversion; done;",
+    "build:all": "packageversion=`cat package.json | grep version | head -1 | awk '{print $2}' | sed 's/[\",]//g'` && for nodeversion in 6 7 8 9 10; do docker build -t ivyowl/alpine-node-pupetteer:$packageversion-$nodeversion -f Docker/Dockerfile-$nodeversion .; done;",
     "build": "docker build -t ivyowl/alpine-node-pupetteer:latest -f Dockerfile .",
     "start:container": "  ",
     "start": "yarn start:container -- bash",
